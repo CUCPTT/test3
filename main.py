@@ -8,6 +8,8 @@ def delete_item():
 
 def clear_item():
     listbox.delete(0, tk.END) 
+    input_textbox1.delete(0, tk.END)
+    input_textbox2.delete(0, tk.END)
     input_textbox3.delete(0, tk.END)
 
 def check_duplicate(item):
