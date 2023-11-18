@@ -12,17 +12,17 @@
 3. 若不是 LL(1) 文法，`判断是否有左公因子或左递归`；
    - 若存在这些特点则进行 `文法改造`；
    - 再次调取 `判断是否为 LL(1) 文法`，若不是则放弃。
-- ![](img/FlowChart.png)
+- ![](misc/FlowChart.png)
 
 ## 方法模块
 
 - **def Is_LL1(grammar):**
-  - `grammar` 文法列表
+  - `grammar` 上下文无关文法列表
   - `return boolean` 是否为 LL(1) 文法
-- **def analyse(grammar):**
+- **def analyse(grammar, str):**
   - `grammar` LL(1) 文法列表
-  - `print` 预测分析法或递归下降法的分析过程
-    - 预测分析法可弹窗以表格形式展示
+  - `str` 待分析的预测字符串
+  - `tkinter.Treeview` 以表格形式展示预测分析过程
   - `return void`
 - **def left_common_factor_or_recursion(grammar):**
   - `grammar` 非 LL(1) 文法列表
@@ -45,4 +45,20 @@ grammar = [('S','a|∧|(T)'),('T','T,S|S')]
 # 改编自《编译原理》第3版 P100:2. LL(1)文法
 grammar = [('S','TE'),('E','+S|ε'),('T','FU'),('U','T|ε'),
     ('F','PG'),('G','*G|ε'),('P','(S)|a|b|∧')]
+```
+
+## 运行说明
+
+```python
+# 如果没有安装过 pipenv
+pip install pipenv
+
+# 安装所有依赖
+pipenv install
+
+# 进入 pipenv 环境
+pipenv shell
+
+# 启动程序
+python main.py
 ```
