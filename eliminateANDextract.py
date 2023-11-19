@@ -176,7 +176,7 @@ def delete():
     language.non_terminal_list = new_non_terminal_list
     language.show("after delete")
 
-# grammar = [('A', 'Bb|c'), ('B', 'Aa')] # 这里对空串的处理好像还有点问题
+# grammar = [('A', 'Bb|c'), ('B', 'Aa')] 
 # grammar = [('S', 'Ab|Ba'), ('A', 'Sa|Bc'), ('B','d')]
 # grammar = [('S', 'a|∧|(T)'), ('T', 'T,S|S')]
 # language = Language()
@@ -195,7 +195,7 @@ def reform(grammar):
     erase()
     language.show("after erase")
     delete()
-    new_grammar = language.reverse_grammar()
+    new_grammar = language.to_grammar()
     print(new_grammar)
     return(new_grammar)
 
