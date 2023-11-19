@@ -1,9 +1,4 @@
 import re
-grammar=[]
-vn = []
-vt=[]
-# a是列表，用来存储上下文无关文法
-a = []
 
 # 求非终结符在vn的位置，即索引
 def index(x):
@@ -140,10 +135,10 @@ def follow_single(s):
                     # 如果后面跟着的是终结符
                     if judge_terminal(i[j+1]):
                         follow[index_vn].add(i[j+1])
-                        break # 是终结符就要跳出循环
+                        break 
                     # 如果后面跟着的是非终结符
                     else:
-                        index_vn_next = index(i[j+1]) # 为此非终结符后面跟着的非终结符在vn的位置
+                        index_vn_next = index(i[j+1]) # 此非终结符后面跟着的非终结符在vn的位置
                         # 如果后面的非终结符的frist集不包含空串，直接添加它的first集
                         if 'ε' not in f[index_vn_next]:
                             for e in f[index_vn_next]:
@@ -194,8 +189,8 @@ def judge_LL1():
     for i in range(len(grammar)):
         for j in range(i + 1, len(grammar)): 
             if grammar[i][0] == grammar[j][0]:
-                a = select[i] & select[j]
-                if a:  # 修改此处，用于判断集合是否为空
+                intersection = select[i] & select[j]
+                if intersection:  # 判断是否有交集
                     print("不是LL(1)文法")
                     flag += 1
                     return False
@@ -206,6 +201,13 @@ def judge_LL1():
 
 # 主函数部分
 def Is_LL1(g):
+    global grammar, vn, vt, a
+    grammar=[]
+    vn = []
+    vt=[]
+    # a是列表，用来存储上下文无关文法
+    a = []
+
     for symbol, production in g:
             # 使用正则表达式分隔字符串
             productions = re.split(r'\|', production)
@@ -238,8 +240,8 @@ def Is_LL1(g):
 
 # 测试：
 # 不是LL1
-# g = [('S', 'a|∧|(T)'), ('T', 'T,S|S')]  
+g = [('S', 'a|∧|(T)'), ('T', 'T,S|S')]  
 # 是LL1
 # g = [('E', 'TD'), ('D', '+E|ε'),('T','FS'),('S','T|ε'),('F','PM'),('M','*M|ε'),('P','(E)|a|b|^')]
 
-# print(Is_LL1(g))
+print(Is_LL1(g))
