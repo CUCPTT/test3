@@ -146,6 +146,8 @@ def create_gui():
     # 运行主循环
     root.mainloop()
 
+from eliminateANDextract import reform
+
 def submit():
     if listbox.size() == 0 or len(input_textbox3.get()) == 0:
         show_warning("警告", "提交内容不能为空")
@@ -154,6 +156,7 @@ def submit():
         grammar = [tuple(rule.split(' -> ')) for rule in rules]
         print("input_grammar: ",grammar)
         print("prediction_string: ",input_textbox3.get())
+        print(reform(grammar))
 
 if __name__ == "__main__":
     create_gui()
