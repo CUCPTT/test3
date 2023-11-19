@@ -147,6 +147,7 @@ def create_gui():
     root.mainloop()
 
 from eliminateANDextract import reform
+from left_check import left_common_factor_or_recursion
 
 def submit():
     if listbox.size() == 0 or len(input_textbox3.get()) == 0:
@@ -157,6 +158,7 @@ def submit():
         print("input_grammar: ",grammar)
         print("prediction_string: ",input_textbox3.get())
         print(reform(grammar))
+        print(left_common_factor_or_recursion(grammar))
 
 if __name__ == "__main__":
     create_gui()
