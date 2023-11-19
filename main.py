@@ -165,6 +165,10 @@ def submit():
             if Is_LL1(re_grammar):
                 # 调用预测分析法
                 print("prediction_string: ",input_textbox3.get())
+                listbox.delete(0, tk.END) 
+                for item in re_grammar:
+                    text = f"{item[0]} -> {item[1]}"
+                    listbox.insert(tk.END, text)
             else:
                 show_warning("提示", "二次改造失败，分析程序已结束")
         else:
