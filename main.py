@@ -148,6 +148,7 @@ def create_gui():
 
 from eliminateANDextract import reform
 from left_check import left_common_factor_or_recursion
+from Is_LL1 import Is_LL1
 
 def submit():
     if listbox.size() == 0 or len(input_textbox3.get()) == 0:
@@ -156,9 +157,19 @@ def submit():
         rules = [listbox.get(i) for i in range(listbox.size())]
         grammar = [tuple(rule.split(' -> ')) for rule in rules]
         print("input_grammar: ",grammar)
-        print("prediction_string: ",input_textbox3.get())
-        print(reform(grammar))
-        print(left_common_factor_or_recursion(grammar))
+        if Is_LL1(grammar):
+            # 调用预测分析法
+            print("prediction_string: ",input_textbox3.get())
+        elif left_common_factor_or_recursion(grammar):
+            re_grammar = reform(grammar)
+            if Is_LL1(re_grammar):
+                # 调用预测分析法
+                print("prediction_string: ",input_textbox3.get())
+            else:
+                show_warning("提示", "二次改造失败，分析程序已结束")
+        else:
+            show_warning("提示", "文法不存在左公因子或左递归，分析程序已结束")
+
 
 if __name__ == "__main__":
     create_gui()
