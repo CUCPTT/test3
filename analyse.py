@@ -245,9 +245,10 @@ def analyse(g, string):
     forecast_analysis_table()
     root = tk.Tk()
     root.title("对"+string+"的分析过程")
+    root.iconbitmap('misc/favicon.ico')
     
     # 创建标题标签
-    title_label = tk.Label(root, text="对"+string+"的分析过程", font=("Arial", 12))
+    title_label = tk.Label(root, text="对 "+string+" 的分析过程", font=("Arial", 12))
     title_label.pack(pady=10)
     
     # 创建表格
@@ -263,8 +264,8 @@ def analyse(g, string):
     # 设置列宽
     table.column("#0", width=0, stretch=tk.NO)
     table.column("Steps", width=100)
-    table.column("AnalyzeStack", width=100)
-    table.column("RemainingInputString", width=100)
+    table.column("AnalyzeStack", width=150)
+    table.column("RemainingInputString", width=150)
     table.column("ProductionOrMatch", width=150)
     
     # 设置列标题
@@ -290,26 +291,26 @@ def analyse(g, string):
                                 stack = stack + f_a_table[i][j][-1::-1]
                         else:
                             cnt = cnt + 1
-                            table.insert("", tk.END, text=str(cnt), values=(str(cnt), stack, string,'拒绝'))
+                            table.insert("", tk.END, text=str(cnt), values=(str(cnt), stack, string,' 拒绝'))
                             flag = 0
                             stack = '#'
                             string = '#'
         else:
             if stack[-1] == string[0]:
                 cnt = cnt + 1
-                table.insert("", tk.END, text=str(cnt), values=(str(cnt), stack, string,'"'+stack[-1]+'"'+'匹配'))
+                table.insert("", tk.END, text=str(cnt), values=(str(cnt), stack, string,'"'+stack[-1]+'" '+'匹配'))
                 stack = stack[0:-1]
                 string = string[1:]
             else:
                 cnt = cnt + 1
-                table.insert("", tk.END, text=str(cnt), values=(str(cnt), stack, string,'拒绝'))
+                table.insert("", tk.END, text=str(cnt), values=(str(cnt), stack, string,' 拒绝'))
                 flag = 0
                 stack = '#'
                 string = '#'
 
     if flag:
         cnt = cnt +1
-        table.insert("", tk.END, text=str(cnt), values=(str(cnt), '#', '#','接受'))
+        table.insert("", tk.END, text=str(cnt), values=(str(cnt), '#', '#',' 接受'))
 
     # 显示表格
     table.pack()

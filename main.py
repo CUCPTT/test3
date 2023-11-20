@@ -160,16 +160,14 @@ def submit():
         print("input_grammar: ",grammar)
         if Is_LL1(grammar):
             analyse(grammar,input_textbox3.get())
-            print("prediction_string: ",input_textbox3.get())
         elif left_common_factor_or_recursion(grammar):
             re_grammar = reform(grammar)
             if Is_LL1(re_grammar):
-                analyse(re_grammar,input_textbox3.get())
-                print("prediction_string: ",input_textbox3.get())
                 listbox.delete(0, tk.END) 
                 for item in re_grammar:
                     text = f"{item[0]} -> {item[1]}"
                     listbox.insert(tk.END, text)
+                analyse(re_grammar,input_textbox3.get())
             else:
                 show_warning("提示", "二次改造失败，分析程序已结束")
         else:
