@@ -1,3 +1,4 @@
+# 判断左递归
 def check_left_recursion(productions, nonterminal, visited):
     if nonterminal in visited:
         return True
@@ -14,11 +15,25 @@ def check_left_recursion(productions, nonterminal, visited):
     visited.remove(nonterminal)
     return False
 
+# 判断左因子
 def check_left_factoring(productions):
-    # 检查左公因子的逻辑
-    # 实现左公因子检查的算法
-    pass
+    for nonterminal, terms in productions:
+        prefixes = {}
+        for term in terms.split('|'):
+            prefix = term.strip()[0]
+            if prefix not in prefixes:
+                prefixes[prefix] = []
+            prefixes[prefix].append(term)
 
+        for prefix in prefixes:
+            if len(prefixes[prefix]) > 1:
+                print(f"左公因子 {prefix} 存在于产生式 {prefixes[prefix]}")
+                return True
+
+    return False
+
+# grammar 存在左公因子或左递归的文法列表
+# return new_grammar 改造后的文法列表
 def left_common_factor_or_recursion(grammar):
     parsed_grammar = [(rule[0], rule[1]) for rule in grammar]
 
@@ -30,7 +45,7 @@ def left_common_factor_or_recursion(grammar):
             left_recursion_present = True
             break
 
-        if check_left_factoring(terms):
+        if check_left_factoring(parsed_grammar):
             left_factoring_present = True
             break
 
