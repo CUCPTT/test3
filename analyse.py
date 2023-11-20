@@ -292,13 +292,20 @@ def analyse(g, string):
                             cnt = cnt + 1
                             table.insert("", tk.END, text=str(cnt), values=(str(cnt), stack, string,'拒绝'))
                             flag = 0
+                            stack = '#'
+                            string = '#'
         else:
             if stack[-1] == string[0]:
                 cnt = cnt + 1
                 table.insert("", tk.END, text=str(cnt), values=(str(cnt), stack, string,'"'+stack[-1]+'"'+'匹配'))
                 stack = stack[0:-1]
                 string = string[1:]
-
+            else:
+                cnt = cnt + 1
+                table.insert("", tk.END, text=str(cnt), values=(str(cnt), stack, string,'拒绝'))
+                flag = 0
+                stack = '#'
+                string = '#'
 
     if flag:
         cnt = cnt +1
