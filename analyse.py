@@ -251,9 +251,15 @@ def analyse(g, string):
     title_label.pack(pady=10)
     
     # 创建表格
-    table = ttk.Treeview(root)
+    table = ttk.Treeview(root,height=20)
     table["columns"] = ("Steps", "AnalyzeStack", "RemainingInputString","ProductionOrMatch")
-    
+    # 显示表格并设置垂直滚动条
+    vsb = ttk.Scrollbar(root, orient="vertical", command=table.yview)
+    table.configure(yscrollcommand=vsb.set)
+    vsb.pack(side="right", fill="y")
+    table.pack(expand=True, fill="both", pady=200) # 设置表格的初始高度
+    # 设置表格的位置和大小
+    table.place( width=500, height=800)
     # 设置列宽
     table.column("#0", width=0, stretch=tk.NO)
     table.column("Steps", width=100)
@@ -289,7 +295,7 @@ def analyse(g, string):
         else:
             if stack[-1] == string[0]:
                 cnt = cnt + 1
-                table.insert("", tk.END, text=str(cnt), values=(str(cnt), stack, string,'"'+stack[-1]+'"'+'配匹'))
+                table.insert("", tk.END, text=str(cnt), values=(str(cnt), stack, string,'"'+stack[-1]+'"'+'匹配'))
                 stack = stack[0:-1]
                 string = string[1:]
 
