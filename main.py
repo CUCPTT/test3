@@ -149,6 +149,7 @@ def create_gui():
 from eliminateANDextract import reform
 from left_check import left_common_factor_or_recursion
 from Is_LL1 import Is_LL1
+from analyse import analyse
 
 def submit():
     if listbox.size() == 0 or len(input_textbox3.get()) == 0:
@@ -158,12 +159,12 @@ def submit():
         grammar = [tuple(rule.split(' -> ')) for rule in rules]
         print("input_grammar: ",grammar)
         if Is_LL1(grammar):
-            # 调用预测分析法
+            analyse(grammar,input_textbox3.get())
             print("prediction_string: ",input_textbox3.get())
         elif left_common_factor_or_recursion(grammar):
             re_grammar = reform(grammar)
             if Is_LL1(re_grammar):
-                # 调用预测分析法
+                analyse(re_grammar,input_textbox3.get())
                 print("prediction_string: ",input_textbox3.get())
                 listbox.delete(0, tk.END) 
                 for item in re_grammar:
