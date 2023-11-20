@@ -38,16 +38,12 @@ class Language(object):
                         if not char.isupper():
                             self.terminal_list.append(char)
 
-    def reverse_grammar(self):
-        reversed_grammar = []
-        for non_terminal, vn in self.non_terminal_list.items():
-            expressions_list = []
-            for expression in vn.expression_list:
-                # reversed_expression = expression.replace('', 'ε')  # 将空字符替换为 'ε'
-                expressions_list.append(expression)
-            reversed_grammar.append((non_terminal, '|'.join(expressions_list)))
-
-        return reversed_grammar
+    def to_grammar(self, epsilon='ε'):
+        grammar = []
+        for vn_name, vn_obj in self.non_terminal_list.items():
+            expressions = '|'.join([epsilon if exp == '' else exp for exp in vn_obj.expression_list])
+            grammar.append((vn_name, expressions))
+        return grammar
 
     def show(self, tips=""):
         print("--------------------this is language(", tips, ")--------------------")
@@ -102,7 +98,7 @@ def erase():
         vn = list(language.non_terminal_list.values())[count5]
         count6_start = 0
         count6_end = 1
-        vn.expression_list.sort()  # ["","a0","a0b"] ['a0c', 'ad', 'b1c']
+        vn.expression_list.sort() 
         while count6_start < len(vn.expression_list):
             express = vn.expression_list[count6_start]
             if express == "":
@@ -180,7 +176,7 @@ def delete():
     language.non_terminal_list = new_non_terminal_list
     language.show("after delete")
 
-# grammar = [('A', 'Bb|c'), ('B', 'Aa')] # 这里对空串的处理好像还有点问题
+# grammar = [('A', 'Bb|c'), ('B', 'Aa')] 
 # grammar = [('S', 'Ab|Ba'), ('A', 'Sa|Bc'), ('B','d')]
 # grammar = [('S', 'a|∧|(T)'), ('T', 'T,S|S')]
 # language = Language()
@@ -199,7 +195,7 @@ def reform(grammar):
     erase()
     language.show("after erase")
     delete()
-    new_grammar = language.reverse_grammar()
+    new_grammar = language.to_grammar()
     print(new_grammar)
     return(new_grammar)
 
