@@ -2,20 +2,12 @@ class Vn(object):
     def __init__(self, name, expression_list):
         self.name = name
         self.expression_list = expression_list
-        self.to_terminal = "Unknown"
-        self.first_list = []
-        self.follow_list = []
-        self.search_table = {}
 
     def show(self):
         print("non terminal name:", self.name)
-        print("to terminal:", self.to_terminal)
         print("expression list:", self.expression_list)
-        print("first list:", self.first_list)
-        print("follow list:", self.follow_list)
-        print("search table:", self.search_table)
         print()
-
+    
 class Language(object):
     def __init__(self):
         self.non_terminal_list = {}
@@ -32,23 +24,23 @@ class Language(object):
                 self.start_node = non_terminal
             for expression in expressions_list:
                 if expression == 'ε':
-                    self.terminal_list.append('')  # 记录 ε 为空字符
+                    self.terminal_list.append('')
                 else:
                     for char in expression:
                         if not char.isupper():
                             self.terminal_list.append(char)
 
-    def to_grammar(self, epsilon='ε'):
+    def to_grammar(self):
         grammar = []
         for vn_name, vn_obj in self.non_terminal_list.items():
-            expressions = '|'.join([epsilon if exp == '' else exp for exp in vn_obj.expression_list])
+            expressions = '|'.join(['ε' if exp == '' else exp for exp in vn_obj.expression_list])
             grammar.append((vn_name, expressions))
         return grammar
 
     def show(self, tips=""):
         print("--------------------this is language(", tips, ")--------------------")
         print("terminal list:", self.terminal_list)
-        print("non terminal list:")
+        # print("non terminal list:", self.non_terminal_list)
         print()
         for vn in self.non_terminal_list.values():
             vn.show()
@@ -161,7 +153,8 @@ def erase():
                 language.add_non_terminal(new_vn)
             count3 += 1
         count4 += 1
-
+        
+    language.show("after erase")
 
 def delete():
     new_non_terminal_list = {language.start_node: language.non_terminal_list[language.start_node]}
@@ -193,7 +186,6 @@ def reform(grammar):
     language.parse_grammar(grammar)
     language.show("original")
     erase()
-    language.show("after erase")
     delete()
     new_grammar = language.to_grammar()
     print(new_grammar)
